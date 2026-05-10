@@ -14,3 +14,14 @@ An advanced image-to-ASCII processing pipeline built with Python, specifically t
    ```bash
    git clone [https://github.com/your-username/hardware-ascii-lab.git](https://github.com/your-username/hardware-ascii-lab.git)
    cd hardware-ascii-lab
+2. Install dependencies:
+
+   pip install -r requirements.txt
+
+3. Run the application:
+
+   python app.py
+
+
+## 📊 How it Works
+The pipeline treats ASCII generation as a computer vision task. It applies a structural mask to the image to ensure that thin lines (like PCB traces or wires) are preserved even when converted to text characters.
