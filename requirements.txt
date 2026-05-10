@@ -1,0 +1,6 @@
+# These libraries are needed for installation
+gradio
+numpy
+matplotlib
+Pillow
+scikit-image
