@@ -1,3 +1,34 @@
+import gradio as gr
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image, ImageFilter, ImageEnhance, ImageOps, ImageDraw, ImageFont
+from skimage.filters import threshold_local
+
+# ---------------------------------------------------
+# Configuration & Asset Prep
+# ---------------------------------------------------
+
+ASCII_PALETTES = {
+    "complex": np.array(list(" .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$")),
+    "standard": np.array(list(" .:-=+*#%@")),
+    "blocks": np.array(list(" ░▒▓█")),
+}
+
+def build_density_map(chars):
+    """Calculates actual visual weight of characters for better mapping."""
+    try:
+        font = ImageFont.load_default()
+    except:
+        font = None # Fallback for environments without default fonts
+    
+    densities = []
+    for ch in chars:
+        img = Image.new("L", (16, 16), 255)
+        draw = ImageDraw.Draw(img)
+        draw.text((2, 2), ch, fill=0, font=font)
+        densities.append(1.0 - (np.array(img).mean() / 255.0))
+    return np.array(densities)
+
 DENSITY_CACHE = {name: build_density_map(chars) for name, chars in ASCII_PALETTES.items()}
 
 # ---------------------------------------------------
